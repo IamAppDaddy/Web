@@ -1,0 +1,392 @@
+@font-face {
+    font-family: 'sfbold'; /* Name you want to use */
+    src: url('fonts/SF-Pro-Display-Bold.otf') format('opentype')
+}
+
+@font-face {
+    font-family: 'semiBold'; /* Name you want to use */
+    src: url('fonts/SF-Pro-Display-Semibold.otf') format('opentype')
+}
+
+body {
+    font-family: 'semiBold', sans-serif;
+    margin: 0 auto; /* Centers the body horizontally */
+ 
+    background: black;
+    color: #86868b;
+}
+
+.real-body{
+    padding-left: 150px;
+    padding-right: 150px;
+}
+
+.highlight{
+    color: white;
+}
+header {
+background: rgba(0, 0, 0, 0.3);
+position: fixed;
+top: 0;
+
+z-index: 1000;
+backdrop-filter: blur(50px);
+box-sizing: border-box;
+
+width: 100%; /* Match the body width */
+    
+    margin: 0 auto; /* Center it */
+    display: flex;
+    justify-content: space-between; /* Spread items apart */
+    align-items: center; /* Align vertically */
+    padding: 20px; /* Adjust padding */
+}
+
+
+.get-app {
+    background: #0071e3;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 30px;
+    height: 40px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+}
+.hero {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+}
+.hero h1 {
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.logo{
+    width: 100px;
+}
+.hero p {
+    font-size: 22px;
+    max-width: 600px;
+    margin-bottom: 30px;
+}
+.cta {
+    background: #0071e3;
+    color: white;
+    padding: 18px 36px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+}
+.info {
+    text-align: center;
+    padding: 100px 10%;
+    background: #121212;
+}
+.info h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+.info p {
+    font-size: 20px;
+}
+.heading {
+font-size: 60px; /* Adjust as needed */
+font-weight: bold;
+text-align: center;
+font-family: 'sfbold', sans-serif;
+letter-spacing: -0.015em;
+
+}
+
+.lite{
+    font-size: 48px !important;
+    line-height: .1;
+    letter-spacing: -0.015em;
+    font-family: 'sfbold', sans-serif;
+    color: white;
+
+}
+
+.glow{
+    color: #fffaf6;
+text-shadow: 0 0 10px #debda7,
+         0 0 40px #b06436,
+         0 0 60px #ab5d29, /* Adjust the color for warm glow */
+         0 0 80px #aa5b26;
+}
+
+.cover_pic_layout {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically if needed */
+    width: 100%;
+    padding: 20px 0;
+}
+
+.cover_pic {
+    max-width: 40%; /* Ensure the image is responsive */
+    height: auto;
+}
+
+.cover_full{
+    max-width: 80%; /* Ensure the image is responsive */
+    height: auto;
+}
+
+.two_image {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Space between images */
+    margin: 0 auto; /* Centers the container */
+}
+
+.image_container {
+    width: 40%; /* Each image takes 40% of the width */
+    height: auto; /* Adjust height dynamically */
+    display: flex;
+}
+
+.rounded_image {
+    width: 100%; /* Ensure it fills the container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 20px; /* Rounded corners */
+    object-fit: contain; /* Ensures full image is visible */
+}
+
+.features {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    max-width: 80%;
+    margin: auto;
+    gap: 40px;
+}
+
+.feature {
+    flex: 1;
+    color: white;
+}
+
+h3 {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+hr {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    background-color: gray;
+    margin: 10px 0;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #86868b;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+    padding: 50px 0;
+    color: #cfcfcf;
+}
+
+
+
+.download-btn:hover {
+    background-color: #005ecb; /* Slightly darker blue on hover */
+}
+
+
+.left {
+    width: 50%;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.right {
+    width: 40%;
+    text-align: right;
+}
+
+.right h2 {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+
+
+
+.download-btn {
+    background: white;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.little_big{
+    font-size: 21px;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+}
+
+.footer-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 40px 10%;
+    min-height: 450px; /* Ensure enough space for overlap */
+}
+
+.footer-left {
+    position: absolute;
+    top: 40px; /* Moved content to the top */
+    left: 10%;
+    z-index: 2; /* Ensures content stays above the background */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-logo {
+    width: 120px;
+    margin-bottom: -10px;
+    margin-top: 100px;
+}
+
+.footer-contact {
+    color: white;
+    text-decoration: none;
+}
+
+/* Copyright Text */
+.footer-copyright {
+    position: absolute;
+    bottom: 20px;
+    left: 10%;
+    color: white;
+    font-size: 14px;
+    z-index: 10;
+}
+
+/* Background Image */
+.footer-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 450px; /* Adjust based on image size */
+    background-image: url('images/footer.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+
+.f_left{
+    padding-right: 30px;
+}
+
+.little_big{
+    text-align: justify;
+}
+
+@media screen and (max-width: 768px) {
+    
+    body {
+        width: 100%;
+    }
+
+    header{
+        width: 100%;
+        padding: 20px;
+    
+        
+    
+    }
+
+    .cover_pic{
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .heading {
+        line-height: 1;
+        font-size: 24px !important;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    .features {
+        display: grid;
+    
+    }
+    .two_image{
+        display: grid;
+    }
+
+    .f_left{
+        padding-right: 0px;
+    }
+
+    .hero{
+        height: 70vh;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    p{
+        text-align: justify;
+    }
+
+    .container{
+        display: grid;
+    }
+    
+    .left{
+        width: 100%;
+    }
+
+    .right{
+        width: 100%;
+        text-align: center;
+    }
+    .footer-bg{
+        background-position: inherit;
+    }
+
+    .real-body{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .glow{
+        text-shadow: 0 0 2px #debda7,
+         0 0 10px #b06436
+         
+    }
+
+
+}
