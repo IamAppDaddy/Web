@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Makkah Qibla Finder Documentation</title>
+        <style>
+            /* Add to the top of your style section */
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                background-color: #ffffff;
+                color: #333;
+                line-height: 1.6;
+            }
+
+            section {
+                width: 100%;
+                /* Ensure section takes full width */
+                margin: 40px auto;
+                padding: 20px;
+                background-color: white;
+                border-radius: 0px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Ensure header and other elements also adapt */
+            header {
+                width: 100%;
+                padding: 60px 10px;
+                /* Reduce padding if needed */
+                text-align: center;
+                background-color: #27ae60;
+                color: white;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            header h1 {
+                font-size: 2.5em;
+                margin: 0;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+
+            header p {
+                font-size: 1.2em;
+                margin-top: 10px;
+            }
+
+
+            section h2 {
+                color: #27ae60;
+                border-bottom: 2px solid #2ecc71;
+                padding-bottom: 10px;
+                line-height: 1.1;
+                margin-bottom: 20px;
+                font-size: 1.8em;
+            }
+
+            ul {
+                list-style-type: disc;
+                padding-left: 20px;
+            }
+
+            li {
+                margin-bottom: 10px;
+            }
+
+            /* Table Styles */
+            .table-container {
+                width: 100%;
+                overflow-x: auto;
+                /* Enable horizontal scrolling */
+                margin-top: 20px;
+            }
+
+            table {
+                width: 100%;
+                min-width: 600px;
+                /* Ensure table doesn't shrink too much */
+                border-collapse: collapse;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            th,
+            td {
+                padding: 15px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+
+            th {
+                background-color: #27ae60;
+                color: white;
+                font-weight: bold;
+                white-space: nowrap;
+                /* Prevent header text wrapping */
+            }
+
+            td {
+                white-space: normal;
+                /* Allow text wrapping in cells for readability */
+            }
+
+            tr:nth-child(even) {
+                background-color: #e8f5e9;
+            }
+
+            tr:hover {
+                background-color: #d4edda;
+            }
+
+            /* Footer */
+            footer {
+                background-color: #27ae60;
+                color: white;
+                text-align: center;
+                padding: 20px;
+                font-size: 1em;
+                position: relative;
+                bottom: 0;
+                width: 100%;
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                header h1 {
+                    font-size: 2em;
+                }
+
+                section {
+                    padding: 15px;
+                }
+
+                .table-container {
+                    -webkit-overflow-scrolling: touch;
+                    /* Smooth scrolling on iOS */
+                }
+
+                table {
+                    font-size: 0.9em;
+                }
+            }
+
+            /* Animations for Excellence */
+            section {
+                animation: fadeIn 1s ease-in-out;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <h1>Makkah Qibla Finder</h1>
+            <p>Never miss your prayers again, no matter where you are! This app helps Muslims worldwide find the
+                accurate Qibla direction for Salah (prayer) with ease and precision. It includes prayer timing
+                notifications, an Islamic songs list with music player, and alarm reminders for prayer times.</p>
+        </header>
+
+        <section id="key-features">
+            <h2>Key Features</h2>
+            <ul>
+                <li><strong>Prayer Timing with Notifications:</strong> Get notified before prayer times using the alarm
+                    manager.</li>
+                <li><strong>Accurate Qibla Direction:</strong> Use advanced compass integration to find the Qibla
+                    direction with pinpoint accuracy based on user location.</li>
+                <li><strong>Islamic Songs List with Music Player:</strong> Enjoy a curated list of Islamic songs with
+                    built-in music player functionality.</li>
+                <li><strong>User-Friendly Interface:</strong> Simple, intuitive design makes it easy for anyone to use.
+                </li>
+                <li><strong>Works Everywhere:</strong> Whether at home, in the office, or traveling, the app ensures you
+                    can always find the right direction.</li>
+                <li><strong>GPS and Compass Integration:</strong> Seamlessly combines GPS data with compass for accurate
+                    results.</li>
+                <li><strong>Offline Mode:</strong> Find the Qibla direction even without an internet connection.</li>
+                <li><strong>Customizable Settings:</strong> Adjust the app to suit your needs with various options.</li>
+            </ul>
+        </section>
+
+        <section id="how-to-use">
+            <h2>How to Use the App</h2>
+            <ol>
+                <li>Open the Makkah Qibla Finder app.</li>
+                <li>Allow access to your location for precise results.</li>
+                <li>Set your prayer times using the alarm manager for reminders.</li>
+                <li>Follow the on-screen compass to find the direction of the Kaaba in Makkah.</li>
+                <li>Browse the Islamic songs list and use the music player to listen.</li>
+                <li>Begin your prayer with confidence, knowing you are facing the right direction.</li>
+            </ol>
+            <p>This app is perfect for travelers, new Muslims, and anyone needing to quickly and accurately determine
+                the Qibla direction.</p>
+        </section>
+
+        <section id="source-code-documentation">
+            <h2>Source Code Documentation</h2>
+            <p>The source code for Makkah Qibla Finder is available for download and modification. It is built using
+                [assuming Android/Java or Kotlin, but adaptable]. Key components include:</p>
+            <ul>
+                <li><strong>Qibla Direction Logic:</strong> Uses GPS to get user latitude/longitude and calculates
+                    direction to fixed Kaaba coordinates (21.4225° N, 39.8262° E) using trigonometric formulas.</li>
+                <li><strong>Compass Integration:</strong> Utilizes device sensors for real-time direction display.</li>
+                <li><strong>Prayer Time Reminders:</strong> Implemented with AlarmManager for scheduling notifications.
+                </li>
+                <li><strong>Music Player:</strong> A simple media player with playlist functionality for Islamic songs.
+                </li>
+                <li><strong>Offline Support:</strong> Caches location data and uses device hardware without network
+                    dependency for core features.</li>
+            </ul>
+            <p>To get started with the source code:</p>
+            <ol>
+                <li>Download the source code from the provided link.</li>
+                <li>Open in your IDE (e.g., Android Studio).</li>
+                <li>Modify as needed, such as changing coordinates or adding new features.</li>
+                <li>Build and deploy to your device or emulator.</li>
+            </ol>
+        </section>
+
+        <section id="template-uses">
+            <h2>Using This App as a Template</h2>
+            <p>The source code of Makkah Qibla Finder can be repurposed as a template for various other applications by
+                modifying key components. Below is a table outlining examples:</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Template App Idea</th>
+                            <th>How to Adapt</th>
+                            <th>Key Modifications</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Music Player App</td>
+                            <td>Reuse the Islamic songs list and music player functionality as the core. Remove Qibla
+                                and
+                                prayer features.</td>
+                            <td>Expand the playlist to support any audio files, add shuffle/repeat options, and
+                                integrate
+                                with device storage for custom songs.</td>
+                        </tr>
+                        <tr>
+                            <td>Custom Direction Finder (e.g., to a Landmark)</td>
+                            <td>Change the fixed latitude/longitude from Kaaba to any specific location (e.g., Eiffel
+                                Tower:
+                                48.8584° N, 2.2945° E).</td>
+                            <td>Update the coordinate constants in the code, modify UI labels, and optionally add
+                                multiple
+                                location presets.</td>
+                        </tr>
+                        <tr>
+                            <td>Event Reminder App</td>
+                            <td>Leverage the AlarmManager for prayer reminders to handle any scheduled events or
+                                notifications.</td>
+                            <td>Replace prayer times with user-defined events, add calendar integration, and customize
+                                notification sounds/content.</td>
+                        </tr>
+                        <tr>
+                            <td>Offline Compass Tool</td>
+                            <td>Keep the GPS and compass integration but remove religious-specific elements.</td>
+                            <td>Enhance with additional modes like true north finder or hiking navigation aids.</td>
+                        </tr>
+                        <tr>
+                            <td>Playlist-Based Meditation App</td>
+                            <td>Use the music player for guided audio sessions, combined with timers from prayer
+                                reminders.
+                            </td>
+                            <td>Replace Islamic songs with meditation tracks, add session timers, and integrate
+                                breathing
+                                exercises UI.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            Download on AppDadz
+        </footer>
+    </body>
+
+</html>
