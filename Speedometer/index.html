@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Speedometer App Documentation</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+                margin: 0;
+                padding: 0;
+                background: #000730;
+                /* Dark background like Apple's aesthetic */
+                color: #fff;
+                line-height: 1.5;
+                font-size: 16px;
+                overflow-x: hidden;
+            }
+
+            header {
+                background: #000730;
+                backdrop-filter: blur(10px);
+                padding: 12px 16px;
+                text-align: center;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+
+            header h1 {
+                margin: 0;
+                font-size: 1.8em;
+                font-weight: 600;
+                color: #fff;
+            }
+
+            main {
+                padding: 16px;
+                max-width: 100%;
+                margin: 0 auto;
+            }
+
+            section {
+                margin-bottom: 32px;
+                padding: 16px;
+                border-radius: 18px;
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            h2 {
+                font-size: 1.5em;
+                font-weight: 600;
+                color: #fff;
+                margin-bottom: 12px;
+            }
+
+            p {
+                font-size: 1em;
+                color: #d1d1d6;
+                margin: 8px 0;
+            }
+
+            ul {
+                list-style: none;
+                padding: 0;
+                display: grid;
+                gap: 8px;
+            }
+
+            ul li {
+                background: rgba(255, 255, 255, 0.08);
+                padding: 12px;
+                border-radius: 12px;
+                font-size: 0.95em;
+                transition: background 0.3s ease;
+            }
+
+            ul li:hover {
+                background: rgba(255, 255, 255, 0.12);
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 16px;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 12px;
+                overflow: hidden;
+            }
+
+            th,
+            td {
+                padding: 12px;
+                text-align: left;
+                font-size: 0.9em;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            th {
+                background: rgba(255, 255, 255, 0.1);
+                color: #fff;
+                font-weight: 600;
+            }
+
+            td {
+                color: #d1d1d6;
+            }
+
+            footer {
+                background: #000730;
+                backdrop-filter: blur(10px);
+                padding: 16px;
+                text-align: center;
+                font-size: 1em;
+                color: #fff;
+                position: sticky;
+                bottom: 0;
+            }
+
+            footer a {
+                color: #2997ff;
+                text-decoration: none;
+                font-weight: 500;
+            }
+
+            footer a:hover {
+                text-decoration: underline;
+            }
+
+            /* Mobile optimizations */
+            @media (max-width: 600px) {
+                body {
+                    font-size: 14px;
+                }
+
+                header h1 {
+                    font-size: 1.5em;
+                }
+
+                h2 {
+                    font-size: 1.3em;
+                }
+
+                section {
+                    padding: 12px;
+                    border-radius: 14px;
+                }
+
+                table {
+                    display: block;
+                    overflow-x: auto;
+                    white-space: nowrap;
+                }
+
+                th,
+                td {
+                    min-width: 100px;
+                }
+            }
+
+            /* Smooth animations */
+            section,
+            ul li,
+            footer {
+                animation: fadeIn 0.5s ease-in;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <h1>Speedometer App</h1>
+        </header>
+        <main>
+            <section id="description">
+                <h2>Introducing Speedometer</h2>
+                <p>Experience speed monitoring like never before with Speedometer, your reliable companion for real-time
+                    speed tracking. Designed with privacy and simplicity at its core, this app requires only location
+                    permission to function. No personal data is collected or shared, ensuring your privacy is always
+                    protected.</p>
+                <p>Perfect for driving, biking, or just satisfying your curiosity about speed, Speedometer delivers a
+                    distraction-free, reliable experience.</p>
+            </section>
+            <section id="features">
+                <h2>Key Features</h2>
+                <ul>
+                    <li><strong>Real-Time Speed Tracking</strong><br>Accurate, real-time speed data powered by your
+                        device’s location.</li>
+                    <li><strong>Privacy First</strong><br>No personal data is collected or shared, ever.</li>
+                    <li><strong>Ad-Free Experience</strong><br>Seamless and uninterrupted, with no ads.</li>
+                    <li><strong>Intuitive Design</strong><br>Simple, elegant interface for effortless use.</li>
+                </ul>
+            </section>
+            <section id="uses">
+                <h2>Extend the Possibilities</h2>
+                <p>This open-source app is a foundation for your creativity. Explore how you can build on Speedometer’s
+                    code for your own projects.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Project Idea</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Unit Conversions</td>
+                            <td>Add km/h to mph, knots, or m/s conversions for global users or niche activities like
+                                aviation.</td>
+                        </tr>
+                        <tr>
+                            <td>Camera Overlay</td>
+                            <td>Integrate a camera UI to record speed over live video, perfect for shareable Reels or
+                                TikToks.</td>
+                        </tr>
+                        <tr>
+                            <td>Fitness Integration</td>
+                            <td>Sync with fitness apps to track speed, distance, or calories during workouts or cycling.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Vehicle Dashboard</td>
+                            <td>Create a full dashboard with GPS navigation, fuel monitoring, or speed limit alerts.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Drone Controller</td>
+                            <td>Track speed for drones or RC vehicles, with real-time data logging for analysis.</td>
+                        </tr>
+                        <tr>
+                            <td>AR Overlay</td>
+                            <td>Use AR to display speed over real-world visuals, ideal for sports or adventure apps.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+        <footer>
+            <a href="#">Download on AppDadz</a>
+        </footer>
+    </body>
+
+</html>
