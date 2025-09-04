@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Screenshots Carousel</title>
+    <style>
+        :root { --gap: 16px; }
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f4f4f9;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            height: 100vh;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        #preview {
+            display: flex;
+            align-items: center;
+            gap: var(--gap);
+            width: 100%;
+            height: 100%;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .cell {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            scroll-snap-align: center;
+        }
+        .cell img {
+            display: block;
+            max-height: 90vh;
+            width: auto;
+            object-fit: contain;
+            border: 1px solid #e0e0e0;
+            border-radius: 30px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+            max-width: 100%;
+        }
+        #preview::-webkit-scrollbar {
+            height: 8px;
+        }
+        #preview::-webkit-scrollbar-thumb {
+            border-radius: 999px;
+            background: rgba(0,0,0,0.12);
+        }
+    </style>
+</head>
+<body>
+    <div id="preview">
+                <div class="cell"><img src="1.png" alt="Screenshot 1"></div>
+        <div class="cell"><img src="2.png" alt="Screenshot 2"></div>
+        <div class="cell"><img src="3.png" alt="Screenshot 3"></div>
+        <div class="cell"><img src="4.png" alt="Screenshot 4"></div>
+        <div class="cell"><img src="5.png" alt="Screenshot 5"></div>
+        <div class="cell"><img src="6.png" alt="Screenshot 6"></div>
+        <div class="cell"><img src="7.png" alt="Screenshot 7"></div>
+        <div class="cell"><img src="8.png" alt="Screenshot 8"></div>
+    </div>
+    <script>
+        (function () {
+            const preview = document.getElementById('preview');
+            const cells = preview.querySelectorAll('.cell');
+            function setEdgePadding() {
+                if (!cells.length) return;
+                const containerWidth = preview.clientWidth;
+                const firstRect = cells[0].getBoundingClientRect();
+                const lastRect = cells[cells.length - 1].getBoundingClientRect();
+                const padLeft = Math.max(0, (containerWidth - firstRect.width) / 2);
+                const padRight = Math.max(0, (containerWidth - lastRect.width) / 2);
+                preview.style.paddingLeft = padLeft + 'px';
+                preview.style.paddingRight = padRight + 'px';
+            }
+            function waitImagesThenInit() {
+                const imgs = preview.querySelectorAll('img');
+                const imgArray = Array.from(imgs);
+                const unloaded = imgArray.filter(i => !i.complete);
+                if (unloaded.length === 0) {
+                    setEdgePadding();
+                    preview.scrollTo({ left: 0, behavior: 'auto' });
+                    return;
+                }
+                let loadedCount = 0;
+                unloaded.forEach(img => {
+                    img.addEventListener('load', () => {
+                        if (++loadedCount === unloaded.length) {
+                            setEdgePadding();
+                            preview.scrollTo({ left: 0, behavior: 'auto' });
+                        }
+                    });
+                    img.addEventListener('error', () => {
+                        if (++loadedCount === unloaded.length) {
+                            setEdgePadding();
+                            preview.scrollTo({ left: 0, behavior: 'auto' });
+                        }
+                    });
+                });
+                setTimeout(() => {
+                    setEdgePadding();
+                    preview.scrollTo({ left: 0, behavior: 'auto' });
+                }, 1200);
+            }
+            window.addEventListener('resize', setEdgePadding);
+            document.readyState === 'complete' || document.readyState === 'interactive'
+                ? waitImagesThenInit()
+                : document.addEventListener('DOMContentLoaded', waitImagesThenInit);
+            preview.addEventListener('click', e => {
+                const cell = e.target.closest('.cell');
+                if (!cell) return;
+                const left = cell.offsetLeft - (preview.clientWidth - cell.clientWidth) / 2;
+                preview.scrollTo({ left, behavior: 'smooth' });
+            });
+        })();
+    
