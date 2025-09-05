@@ -34,8 +34,10 @@
                 height: 100%;
                 overflow-x: auto;
                 scroll-behavior: smooth;
-                -webkit-overflow-scrolling: touch;
+                /* Remove iOS momentum scrolling */
+                -webkit-overflow-scrolling: auto;
                 scroll-snap-type: x mandatory;
+                scroll-padding: 0 calc(var(--edge-padding));
                 padding-left: var(--edge-padding);
                 padding-right: var(--edge-padding);
             }
@@ -46,7 +48,10 @@
                 align-items: center;
                 justify-content: center;
                 scroll-snap-align: center;
+                /* Force browser to snap even with high momentum */
+                scroll-snap-stop: always;
             }
+
 
             .cell img {
                 display: block;
@@ -116,6 +121,13 @@
                         preview.scrollTo({ left: targetLeft, behavior: 'smooth' });
                     }
                 }
+
+                // Snap immediately on scroll end
+                preview.addEventListener('scroll', () => {
+                    clearTimeout(isScrolling);
+                    isScrolling = setTimeout(snapToNearest, 60); // Faster response
+                });
+
 
                 function debounceScroll() {
                     clearTimeout(isScrolling);
