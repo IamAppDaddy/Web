@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottie Grid</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 60px;
+        background: #f4f4f9;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #preview {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        max-width: 1200px;
+      }
+
+      .cell {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+
+      dotlottie-player {
+        width: 90%;
+        height: 90%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="preview">
+      <div class="cell"><dotlottie-player src="1.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="2.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="3.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="4.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="5.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="6.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="7.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="8.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="9.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="10.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="11.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="12.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="13.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="14.lottie" autoplay loop></dotlottie-player></div>
+      <div class="cell"><dotlottie-player src="15.lottie" autoplay loop></dotlottie-player></div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"></script>
+  </body>
+
+</html>
