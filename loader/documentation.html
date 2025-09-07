@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>Lottie Documentation</title>
+        <style>
+            body {
+                font-family: 'Helvetica Neue', Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background: linear-gradient(135deg, #ffffff, #e0f7f9);
+                color: #1a3c34;
+                line-height: 1.6;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 45px !important;
+                color: #0d2f28;
+                line-height: 1.1;
+                padding: 35px 15px;
+                width: 100%;
+                background: #00ffc3;
+                margin: auto;
+            }
+
+            h2,
+            h3 {
+                color: #0d2f28;
+                font-weight: 600;
+                margin-top: 20px;
+            }
+
+            .content {
+                padding: 15px;
+                flex-grow: 1;
+            }
+
+            p,
+            ul {
+                font-size: 1.1em;
+                margin-bottom: 15px;
+            }
+
+            ul {
+                padding-left: 20px;
+            }
+
+            code {
+                background-color: rgba(0, 0, 0, 0.1);
+                padding: 4px 8px;
+                border-radius: 6px;
+                font-size: 0.9em;
+                color: #0d2f28;
+            }
+
+            pre {
+                background-color: rgba(0, 0, 0, 0.05);
+                padding: 15px;
+                border-radius: 8px;
+                overflow-x: auto;
+                font-size: 0.9em;
+                margin: 10px 0;
+                border-left: 4px solid #1a3c34;
+            }
+
+            a {
+                color: #1a3c34;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+            a:hover {
+                color: #0d2f28;
+                text-decoration: underline;
+            }
+
+            footer {
+                background: linear-gradient(90deg, #52ebc7, #00ffc3);
+                color: #000000;
+                text-align: center;
+                padding: 10px 0;
+                font-size: 1.2em;
+                font-weight: bold;
+            }
+
+            @media (max-width: 480px) {
+                h1 {
+                    font-size: 2em;
+                }
+
+                h2 {
+                    font-size: 1.5em;
+                }
+
+                h3 {
+                    font-size: 1.2em;
+                }
+
+                p,
+                ul {
+                    font-size: 1em;
+                }
+
+                pre {
+                    font-size: 0.8em;
+                    padding: 10px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Lottie Documentation</h1>
+        <div class="content">
+
+
+            <h2>What is Lottie?</h2>
+            <p>
+                Lottie is an open-source animation library developed by Airbnb, designed to render high-quality
+                animations created in Adobe After Effects using the Bodymovin plugin. It allows developers to use
+                animations in a lightweight, scalable, and cross-platform manner without relying on heavy GIFs or video
+                files. Lottie animations are stored as JSON files and can be easily integrated into mobile, web, and
+                desktop applications.
+            </p>
+            <p>
+                Key features include:
+            <ul>
+                <li>Cross-platform support (Android, iOS, Web, etc.)</li>
+                <li>Small file sizes compared to traditional video animations</li>
+                <li>Scalable vector graphics that adapt to any screen size</li>
+                <li>Highly customizable with code</li>
+            </ul>
+            </p>
+
+            <h2>Using Lottie in Android Development</h2>
+            <p>
+                To use Lottie animations in Android, you can leverage the <a
+                    href="https://github.com/airbnb/lottie-android">Lottie Android library</a>. Below are the steps and
+                code examples to get started.
+            </p>
+
+            <h3>Step 1: Add Dependency</h3>
+            <p>
+                Add the Lottie library to your project by including it in your `build.gradle` file at the app level:
+            </p>
+            <pre>
+dependencies {
+    implementation "com.airbnb.android:lottie:6.4.0"
+}
+    </pre>
+
+            <h3>Step 2: Add Lottie Animation in Layout</h3>
+            <p>
+                Use the `<com.airbnb.lottie.LottieAnimationView>` in your XML layout file to display the animation:
+            </p>
+            <pre>
+&lt;com.airbnb.lottie.LottieAnimationView
+    android:id="@+id/animation_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:lottie_fileName="animation.json"
+    app:lottie_autoPlay="true"
+    app:lottie_loop="true" /&gt;
+    </pre>
+
+            <h3>Step 3: Load and Control Animation Programmatically</h3>
+            <p>
+                You can load and control the animation in your Activity or Fragment using Kotlin or Java:
+            </p>
+            <pre>
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.airbnb.lottie.LottieAnimationView
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val animationView = findViewById&lt;LottieAnimationView&gt;(R.id.animation_view)
+        animationView.setAnimation("animation.json") // Load from assets
+        animationView.playAnimation() // Start animation
+    }
+}
+    </pre>
+
+            <h3>Step 4: Add Animation Files</h3>
+            <p>
+                Place your Lottie JSON files in the `app/src/main/assets` directory of your Android project. Ensure the
+                `lottie_fileName` or `setAnimation()` method points to the correct file name.
+            </p>
+        </div>
+
+        <footer>
+            <p>Download on AppDadz</p>
+        </footer>
+    </body>
+
+</html>
