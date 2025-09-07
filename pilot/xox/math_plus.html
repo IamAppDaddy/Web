@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Game</title>
+    <style>
+        @font-face {
+            font-family: 'CustomFont';
+            src: url('font.ttf') format('truetype');
+        }
+        
+        body { 
+            text-align: center; 
+            background: #e0e5ec;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .header {
+            font-family: 'CustomFont', sans-serif; /* Only headings use CustomFont */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            letter-spacing: 2px; /* Adjusted for header */
+        }
+        #target {
+                 font-size: 25px; 
+        }
+        .container, .instructions-card, .dialog {
+            background: #e0e5ec;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 10px 10px 30px #bebebe, -10px -10px 30px #ffffff;
+            position: relative;
+        }
+        .instructions-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 400px;
+        }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 100px); 
+            gap: 15px; 
+            justify-content: center; 
+            margin-top: 20px;
+        }
+        .btn { 
+            width: 100px; 
+            height: 100px; 
+            font-size: 24px; 
+            font-weight: bold; /* Numbers bold */
+            cursor: pointer; 
+            border: none;
+            border-radius: 15px;
+            background: #e0e5ec;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        .btn:active {
+            background: #d1d9e6;
+        }
+        .correct { background-color: #90ee90 !important; }
+        .wrong { background-color: #ff4040 !important; }
+        .selected { background-color: #ffecb3 !important; }
+        .start-btn, .restart-btn, .dialog-btn { 
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 6px 6px 10px #bebebe, -6px -6px 10px #ffffff;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        .start-btn:active, .restart-btn:active, .dialog-btn:active {
+            box-shadow: inset 6px 6px 10px #bebebe, inset -6px -6px 10px #ffffff;
+        }
+        #time-label {
+            color: #333;
+        }
+        #time {
+            color: #920506;
+            font-weight: bold;
+        }
+        /* Dialog Styles */
+        .dialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 1000;
+            min-width: 300px;
+            text-align: center;
+        }
+        .dialog.success {
+            border: 5px solid #90ee90;
+        }
+        .dialog.failure {
+            border: 5px solid #ff4040; /* Fixed to match theme */
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions-card" id="instructions">
+        <h1 class="header">Math Game</h1>
+        <p>
+            🎯 Select two numbers that add up to the target!<br>
+            ⏱️ Time limits by level:<br>
+            <ul style="list-style-type: disc; padding-left: 20px; text-align: left;">
+                <li>Level 1: 30s</li>
+                <li>Level 2: 15s</li>
+                <li>Level 3: 5s</li>
+            </ul>
+            ✅ Correct answers turn <b><span style="color: #007c00;">Green</span></b><br>
+            ❌ Wrong answers turn <b><span style="color: #920506;">Red</span></b> & end the game<br>
+            🌟 Score 5 points to level up, 10 for max level!
+        </p>
+        <button class="start-btn" onclick="startGame()">Get Started</button>
+    </div>
+    <div class="container" id="gameContainer" style="display: none;">
+        <h1 class="header">Math Game</h1>
+        <h2 class="game-info">Target: <span id="target">0</span></h2>
+        <h3 class="game-info" id="time-label">Time Left: <span id="time">30</span> sec</h3>
+        <h3 class="game-info">Level: <span id="level">1</span></h3>
+        <div class="grid" id="grid"></div>
+        <h3 class="game-info">Score: <span id="score">0</span></h3>
+        <button class="restart-btn" id="restart" onclick="restartGame()" style="display: none;">Restart Game</button>
+    </div>
+    <!-- Custom Dialog -->
+    <div class="overlay" id="dialogOverlay"></div>
+    <div class="dialog" id="customDialog">
+        <h2 id="dialogTitle"></h2>
+        <p id="dialogMessage"></p>
+        <button class="dialog-btn" id="dialogClose" onclick="closeDialog()">OK</button>
+    </div>
+    <audio id="clickSound" src="click.wav"></audio>
+    <script>
+        let score = 0;
+        let target = 0;
+        let selected = [];
+        let level = 1;
+        let timer;
+        let timeLeft;
+        let buttons = [];
+        
+        function setTimeLimit() {
+            return level === 1 ? 30 : level === 2 ? 15 : 5;
+        }
+        
+        function startGame() {
+            document.getElementById("instructions").style.display = "none";
+            document.getElementById("gameContainer").style.display = "block";
+            score = 0;
+            level = 1;
+            document.getElementById("score").innerText = score;
+            document.getElementById("level").innerText = level;
+            generateGame();
+        }
+        
+        function updateTimer() {
+            document.getElementById("time").innerText = timeLeft;
+            if (timeLeft > 0) {
+                timeLeft--;
+                timer = setTimeout(updateTimer, 1000);
+            } else {
+                gameOver("Time's up!");
+            }
+        }
+        
+        function showDialog(title, message, isSuccess) {
+            const dialog = document.getElementById("customDialog");
+            const overlay = document.getElementById("dialogOverlay");
+            document.getElementById("dialogTitle").innerText = title;
+            document.getElementById("dialogMessage").innerText = message;
+            dialog.classList.remove("success", "failure");
+            dialog.classList.add(isSuccess ? "success" : "failure");
+            dialog.style.display = "block";
+            overlay.style.display = "block";
+        }
+
+        function closeDialog() {
+            document.getElementById("customDialog").style.display = "none";
+            document.getElementById("dialogOverlay").style.display = "none";
+        }
+        
+        function gameOver(message) {
+            showDialog("Game Over", `${message} Final Score: ${score}`, false);
+            document.getElementById("restart").style.display = "block";
+            document.getElementById("grid").innerHTML = "";
+            clearTimeout(timer);
+        }
+        
+        function restartGame() {
+            score = 0;
+            level = 1;
+            document.getElementById("score").innerText = score;
+            document.getElementById("level").innerText = level;
+            document.getElementById("restart").style.display = "none";
+            generateGame();
+            closeDialog();
+        }
+        
+        function generateGame() {
+            clearTimeout(timer);
+            timeLeft = setTimeLimit();
+            updateTimer();
+            selected = [];
+            buttons = [];
+            document.getElementById("grid").innerHTML = "";
+            
+            // Generate a target that's at least 2 (since we need two numbers)
+            target = Math.floor(Math.random() * 10) + 2; // Targets from 2 to 11
+            document.getElementById("target").innerText = target;
+
+            // Generate 8 random numbers
+            let numbers = new Set();
+            while (numbers.size < 8) {
+                numbers.add(Math.floor(Math.random() * 10) + 1); // Numbers 1-10
+            }
+            let numArray = [...numbers];
+
+            // Ensure at least one valid pair exists
+            let firstNum = numArray[Math.floor(Math.random() * numArray.length)];
+            let secondNum = target - firstNum;
+            if (secondNum >= 1 && secondNum <= 10) { // Ensure second number is valid
+                numArray[Math.floor(Math.random() * numArray.length)] = secondNum; // Replace a random number
+            } else {
+                // If secondNum is invalid, adjust firstNum to make it work
+                firstNum = Math.floor(target / 2);
+                secondNum = target - firstNum;
+                numArray[0] = firstNum; // Replace first two for simplicity
+                numArray[1] = secondNum;
+            }
+
+            // Shuffle the array
+            numArray.sort(() => Math.random() - 0.5);
+
+            // Create buttons
+            numArray.forEach(num => {
+                let btn = document.createElement("button");
+                btn.innerText = num;
+                btn.classList.add("btn");
+                btn.onclick = () => { 
+                    playClickSound();
+                    selectNumber(btn, num); 
+                };
+                document.getElementById("grid").appendChild(btn);
+                buttons.push(btn);
+            });
+        }
+        
+        function playClickSound() {
+            document.getElementById("clickSound").play();
+        }
+        
+        function selectNumber(btn, num) {
+            if (selected.length < 2 && !btn.classList.contains("selected")) {
+                btn.classList.add("selected");
+                selected.push({button: btn, value: num});
+            }
+            
+            if (selected.length === 2) {
+                checkAnswer();
+            }
+        }
+        
+        function checkAnswer() {
+            let sum = selected[0].value + selected[1].value;
+            if (sum === target) {
+                selected.forEach(item => item.button.classList.add("correct"));
+                score++;
+                document.getElementById("score").innerText = score;
+                
+                if (score >= 10) {
+                    level = 3;
+                } else if (score >= 5) {
+                    level = 2;
+                }
+                document.getElementById("level").innerText = level;
+                setTimeout(generateGame, 1000);
+            } else {
+                selected.forEach(item => item.button.classList.add("wrong"));
+                setTimeout(() => gameOver("Wrong answer!"), 1000);
+            }
+        }
+        
+        generateGame();
+    </script>
+</body>
+</html>

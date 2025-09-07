@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snakes & Ladders Adventure 🐾🎲</title>
+    <style>
+        body { font-family: 'Comic Sans MS', Arial, sans-serif; text-align: center; background: linear-gradient(to bottom, #e6f3ff, #fff); margin: 0; padding: 20px; }
+        h1 { color: #2c3e50; font-size: 36px; text-shadow: 1px 1px 2px #ccc; }
+        p { font-size: 18px; color: #34495e; }
+        .board { display: grid; grid-template-columns: repeat(10, 60px); gap: 4px; margin: 30px auto; width: 620px; background: #f9f9f9; padding: 10px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .cell { width: 60px; height: 60px; background: #fff; border: 2px solid #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; position: relative; transition: transform 0.2s; }
+        .cell:hover { transform: scale(1.05); }
+        .cell-number { position: absolute; top: 2px; left: 2px; font-size: 12px; color: #333; z-index: 1; }
+        .increment { background: #b3ffb3; border-color: #66cc66; }
+        .decrement { background: #ffcccc; border-color: #ff6666; }
+        .player { position: absolute; width: 40px; height: 40px; transition: all 0.3s ease; z-index: 2; }
+        .animal { position: absolute; width: 30px; height: 30px; bottom: 2px; right: 2px; z-index: 0; }
+        #diceBtn { padding: 12px 24px; font-size: 18px; cursor: pointer; background: #ff9900; color: white; border: none; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        #diceBtn:hover { background: #e68a00; }
+        #status { margin: 20px; font-size: 20px; color: #2c3e50; background: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        #fact { margin: 20px; font-size: 16px; color: #666; display: none; background: #f0f0f0; padding: 10px; border-radius: 5px; }
+        img { width: 100%; height: 100%; object-fit: contain; }
+    </style>
+</head>
+<body>
+<h1>Snakes & Ladders Adventure 🐾🎲</h1>
+<p>Race to 100 points and beat the Alien Monster! 🏆</p>
+<button id="diceBtn" onclick="rollDice()">Roll the Dice 🎲</button>
+<div id="status">Your Turn 👩🏼‍🦱: 1 | Alien 👾: 1</div>
+<div id="fact"></div>
+<div class="board" id="board"></div>
+
+<script>
+    // Game setup
+    const boardSize = 100;
+    const animals = {
+        'chick': { img: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Baby%20Chick.png', value: 5, type: 'increment', fact: 'Chicks 🐤 hatch from eggs in about 21 days!' },
+        'eagle': { img: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Eagle.png', value: 30, type: 'increment', fact: 'Eagles 🦅 can soar up to 10,000 feet high!' },
+        'bat': { img: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bat.png', value: 10, type: 'increment', fact: 'Bats 🦇 are the only mammals that can fly!' },
+        'turtle': { img: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Turtle.png', value: 2, type: 'increment', fact: 'Turtles 🐢 can live over 100 years!' },
+        'snake': { img: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Snake.png', value: -Infinity, type: 'decrement', fact: 'Snakes 🐍 shed their skin to grow!' },
+        'pig': { img: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Pig%20Face.png', value: -10, type: 'decrement', fact: 'Pigs 🐷 are smarter than dogs!' }
+    };
+    let playerPos = 1;
+    let systemPos = 1;
+    let isPlayerTurn = true;
+    const animalPositions = {};
+
+    // Randomly assign animals
+    const animalTypes = Object.keys(animals);
+    const usedPositions = new Set([1]);
+    while (usedPositions.size < 15) {
+        const pos = Math.floor(Math.random() * (boardSize - 1)) + 2;
+        if (!usedPositions.has(pos)) {
+            usedPositions.add(pos);
+            animalPositions[pos] = animalTypes[Math.floor(Math.random() * animalTypes.length)];
+        }
+    }
+
+    // Create board
+    const board = document.getElementById('board');
+    for (let i = boardSize; i >= 1; i--) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        cell.id = `cell-${i}`;
+
+        // Add number
+        const number = document.createElement('span');
+        number.classList.add('cell-number');
+        number.textContent = i;
+        cell.appendChild(number);
+
+        // Add animal if present
+        if (animalPositions[i]) {
+            cell.classList.add(animals[animalPositions[i]].type);
+            const img = document.createElement('img');
+            img.src = animals[animalPositions[i]].img;
+            img.alt = animalPositions[i];
+            img.classList.add('animal');
+            cell.appendChild(img);
+        }
+        board.appendChild(cell);
+    }
+
+    // Initial positions
+    updatePosition('player', playerPos, 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People%20with%20activities/Woman%20Standing%20Medium-Light%20Skin%20Tone.png');
+    updatePosition('system', systemPos, 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Alien%20Monster.png');
+
+    // Roll dice function
+    function rollDice() {
+        const dice = Math.floor(Math.random() * 6) + 1;
+        document.getElementById('fact').style.display = 'none';
+        if (isPlayerTurn) {
+            playerPos = move(playerPos, dice, 'player');
+            if (playerPos >= 100) {
+                showRansomNote();
+                return;
+            }
+            isPlayerTurn = false;
+            setTimeout(systemTurn, 1000);
+        }
+        updateStatus(dice);
+    }
+
+    // System's turn
+    function systemTurn() {
+        const dice = Math.floor(Math.random() * 6) + 1;
+        systemPos = move(systemPos, dice, 'system');
+        if (systemPos >= 100) {
+            alert('Alien Monster Wins! 😢');
+            resetGame();
+            return;
+        }
+        isPlayerTurn = true;
+        updateStatus(dice);
+    }
+
+    // Move player or system
+    function move(position, dice, type) {
+        let newPos = position + dice;
+        if (newPos > 100) newPos = position;
+        if (animalPositions[newPos]) {
+            const animal = animals[animalPositions[newPos]];
+            if (animal.value === -Infinity) newPos = 1;
+            else newPos += animal.value;
+            if (newPos < 1) newPos = 1;
+            showFact(animal.fact);
+        }
+        updatePosition(type, newPos, type === 'player' ?
+            'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People%20with%20activities/Woman%20Standing%20Medium-Light%20Skin%20Tone.png' :
+            'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Alien%20Monster.png');
+        return newPos;
+    }
+
+    // Update position on board
+    function updatePosition(type, pos, imgSrc) {
+        document.querySelectorAll(`.${type}`).forEach(el => el.remove());
+        const cell = document.getElementById(`cell-${pos}`);
+        const token = document.createElement('img');
+        token.classList.add(type);
+        token.src = imgSrc;
+        token.alt = type;
+        cell.appendChild(token);
+    }
+
+    // Update game status
+    function updateStatus(dice) {
+        const turn = isPlayerTurn ? 'Your Turn 👩🏼‍🦱' : 'Alien Turn 👾';
+        document.getElementById('status').textContent = `${turn}: You 👩🏼‍🦱 at ${playerPos} | Alien 👾 at ${systemPos} (Rolled: ${dice})`;
+    }
+
+    // Show animal fact
+    function showFact(fact) {
+        const factDiv = document.getElementById('fact');
+        factDiv.textContent = `Fun Fact: ${fact}`;
+        factDiv.style.display = 'block';
+    }
+
+    // Reset game
+    function resetGame() {
+        playerPos = 1;
+        systemPos = 1;
+        isPlayerTurn = true;
+        updatePosition('player', playerPos, 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People%20with%20activities/Woman%20Standing%20Medium-Light%20Skin%20Tone.png');
+        updatePosition('system', systemPos, 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Alien%20Monster.png');
+        updateStatus(0);
+        document.getElementById('fact').style.display = 'none';
+        document.getElementById('ransom').style.display = 'none';
+    }
+
+    // STEM Ransom Note
+    document.body.insertAdjacentHTML('beforeend', `
+        <div id="ransom" style="margin: 20px; font-family: monospace; background: #ffe6e6; padding: 15px; border: 2px dashed #ff9999; display: none;">
+            <h3>🔬 S.T.E.M. RANSOM NOTE 🔬</h3>
+            <p>To: The Champ 🏆</p>
+            <p>From: STEM Squad 🧑‍🔬</p>
+            <p>We’ve snatched your win! 🎉 Free it by solving:</p>
+            <ul style="text-align: left;">
+                <li><b>Science</b> 🌡️: How fast can an eagle 🦅 fly? (Hint: ~100 mph)</li>
+                <li><b>Tech</b> 💻: Fix: \`if (pos = 100) win()\` (Use \`===\`)</li>
+                <li><b>Eng</b> ⚙️: Build a bat 🦇 boost from 80 to 90.</li>
+                <li><b>Math</b> ➕: On 95, roll 6, hit pig 🐷 (-10). Where? (85)</li>
+            </ul>
+            <p>Reply in binary (0101 = YES) or Alien 👾 keeps it!</p>
+            <p>— STEM Squad 🧪</p>
+        </div>
+    `);
+
+    function showRansomNote() {
+        document.getElementById('ransom').style.display = 'block';
+        alert('You Win! 🎉 But... check the ransom note!');
+        resetGame();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let Us Fly: The Game - Documentation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.5;
+            margin: 0;
+            padding: 10px;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        h1 {
+            font-size: 1.5em;
+            color: #1a73e8;
+            margin: 10px 0;
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.2em;
+            color: #333;
+            margin: 15px 0 5px;
+        }
+        p {
+            font-size: 0.95em;
+            margin: 8px 0;
+        }
+        ul {
+            list-style-type: disc;
+            margin: 10px 0 10px 20px;
+            padding-left: 10px;
+            font-size: 0.9em;
+        }
+        ul ul {
+            list-style-type: circle;
+        }
+        code {
+            background-color: #e8ecef;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.85em;
+        }
+        pre {
+            background-color: #e8ecef;
+            padding: 8px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 0.8em;
+            margin: 8px 0;
+        }
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #1a73e8;
+            color: white;
+            font-size: 0.9em;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 8px;
+            }
+            h1 {
+                font-size: 1.3em;
+            }
+            h2 {
+                font-size: 1.1em;
+            }
+            p, ul {
+                font-size: 0.9em;
+            }
+            pre {
+                font-size: 0.75em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Let Us Fly: The Game - Documentation</h1>
+
+<p>This documentation outlines the "Let Us Fly" game, its controls, and how to use this template for a mobile app or game website, optimized for mobile viewing.</p>
+
+<h2>1. How the Game Works</h2>
+
+<p>"Let Us Fly" is an endless 3D flight game built with HTML5, JavaScript, and Three.js. You control an army propeller plane over a sea, dodging green tetrahedral obstacles (stones) and collecting yellow coins to maintain energy.</p>
+
+<h3>Key Gameplay Elements:</h3>
+<ul>
+    <li><strong>Objective:</strong> Fly as far as possible, avoiding obstacles and collecting coins. Game ends when energy depletes or the plane crashes.</li>
+    <li><strong>Progression:</strong>
+        <ul>
+            <li>Distance: Increases as you fly.</li>
+            <li>Levels: Advance every 1000 units, increasing speed and enemy spawns.</li>
+            <li>Energy: Starts at 100, decreases with speed, replenished by coins (+3), reduced by enemies (-10).</li>
+        </ul>
+    </li>
+    <li><strong>Game Elements:</strong>
+        <ul>
+            <li><strong>Plane:</strong> Army-style propeller plane, auto-moves forward; control height and lateral position.</li>
+            <li><strong>Sea:</strong> Wavy ocean, rotates for forward motion effect.</li>
+            <li><strong>Sky:</strong> Moving clouds for ambiance.</li>
+            <li><strong>Coins:</strong> Yellow tetrahedrons, spawn in clusters, add energy.</li>
+            <li><strong>Obstacles:</strong> Green tetrahedrons, spawn by level/distance, reduce energy on hit.</li>
+            <li><strong>Particles:</strong> Visual effects for collisions/coin collection.</li>
+        </ul>
+    </li>
+    <li><strong>Audio:</strong>
+        <ul>
+            <li>Coin collection sound.</li>
+            <li>Enemy collision sound.</li>
+            <li>Plane engine sounds (start, loop, end).</li>
+        </ul>
+    </li>
+    <li><strong>Game States:</strong>
+        <ul>
+            <li><strong>Playing:</strong> Active gameplay.</li>
+            <li><strong>Game Over:</strong> Energy at 0, plane falls, score sent to Android app.</li>
+            <li><strong>Waiting Replay:</strong> Tap to restart.</li>
+        </ul>
+    </li>
+    <li><strong>Performance:</strong> Uses requestAnimationFrame, supports touch/mouse, and resizes for mobile.</li>
+</ul>
+
+<h3>Controls:</h3>
+<ul>
+    <li><strong>Mobile/Touch:</strong>
+        <ul>
+            <li>Drag finger left/right to steer.</li>
+            <li>Drag up/down to adjust height.</li>
+            <li>Tap to replay after game over.</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>2. Using This Template</h2>
+
+<p>This self-contained HTML game uses Three.js, TweenMax, and assets (sounds, CSS). It's ideal for a website or mobile app via WebView.</p>
+
+<h3>Prerequisites:</h3>
+<ul>
+    <li>Libraries: <code>three.min.js</code>, <code>TweenMax.min.js</code>.</li>
+    <li>Sound files: <code>coin.wav</code>, <code>dash1.wav</code>, <code>dash2.wav</code>, <code>plane_start.mp3</code>, <code>plane_middle.mp3</code>, <code>plane_end.mp3</code>.</li>
+    <li>CSS: <code>demo.css</code>, <code>game.css</code>.</li>
+    <li>Ensure correct file paths in HTML.</li>
+</ul>
+
+<h3>Creating a Game Website:</h3>
+<ol>
+    <li><strong>Setup:</strong>
+        <ul>
+            <li>Place HTML (<code>index.html</code>), libraries, CSS, and sounds in folders (<code>js/</code>, <code>css/</code>, <code>sounds/</code>).</li>
+        </ul>
+    </li>
+    <li><strong>Customize:</strong>
+        <ul>
+            <li>Edit <code>game</code> object for difficulty (speeds, spawns).</li>
+            <li>Change <code>Colors</code> or Three.js models (<code>AirPlane</code>, <code>Ennemy</code>).</li>
+            <li>Update HTML UI (score display).</li>
+        </ul>
+    </li>
+    <li><strong>Host:</strong>
+        <ul>
+            <li>Use a server (e.g., Netlify, Python <code>http.server</code>).</li>
+            <li>Access via <code>http://localhost/index.html</code>.</li>
+            <li>Minify JS/CSS for production.</li>
+        </ul>
+    </li>
+    <li><strong>Test:</strong> Verify audio (needs user interaction) and responsiveness.</li>
+</ol>
+
+<h3>Integrating into an Android App with WebView:</h3>
+<p>The game supports Android with a JavaScript interface for scores.</p>
+<ol>
+    <li><strong>Android Project:</strong>
+        <ul>
+            <li>Create project in Android Studio.</li>
+            <li>Add WebView in <code>activity_main.xml</code>:
+                <pre><code>&lt;WebView
+    android:id="@+id/webView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/&gt;</code></pre>
+            </li>
+        </ul>
+    </li>
+    <li><strong>Load Game:</strong>
+        <ul>
+            <li>In <code>MainActivity.java</code>:
+                <pre><code>WebView webView = findViewById(R.id.webView);
+webView.getSettings().setJavaScriptEnabled(true);
+webView.getSettings().setDomStorageEnabled(true);
+webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
+webView.loadUrl("file:///android_asset/index.html");
+</code></pre>
+            </li>
+            <li>Copy HTML, JS, CSS, sounds to <code>assets/</code>.</li>
+        </ul>
+    </li>
+    <li><strong>JavaScript Interface:</strong>
+        <ul>
+            <li>Add score interface:
+                <pre><code>webView.addJavascriptInterface(new WebAppInterface(this), "Android");
+
+public class WebAppInterface {
+    Context mContext;
+    WebAppInterface(Context c) { mContext = c; }
+    @JavascriptInterface
+    public void receiveScore(int score) {
+        Toast.makeText(mContext, "Score: " + score, Toast.LENGTH_SHORT).show();
+    }
+}</code></pre>
+            </li>
+            <li>Game calls <code>Android.receiveScore</code> on game over.</li>
+        </ul>
+    </li>
+    <li><strong>Permissions:</strong>
+        <ul>
+            <li>Add <code>&lt;uses-permission android:name="android.permission.INTERNET"/&gt;</code> in <code>AndroidManifest.xml</code> for URLs.</li>
+            <li>Enable <code>android:hardwareAccelerated="true"</code> for 3D.</li>
+            <li>Consider locking to landscape.</li>
+        </ul>
+    </li>
+    <li><strong>Customize:</strong>
+        <ul>
+            <li>Extend JS interface (e.g., for pause, ads).</li>
+            <li>Add native UI (buttons, leaderboards).</li>
+            <li>Test touch and audio on devices.</li>
+        </ul>
+    </li>
+    <li><strong>Publish:</strong> Build APK, optimize assets, submit to Google Play.</li>
+</ol>
+
+<p>For iOS, use WKWebView. Debug audio/performance issues via console logs or WebView debugging.</p>
+
+<p>Extend with leaderboards, power-ups, or multiplayer by modifying JS.</p>
+
+<footer>Download on AppDadz</footer>
+
+</body>
+</html>
