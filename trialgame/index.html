@@ -21,6 +21,9 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/86/three.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/three@0.86.0/examples/js/loaders/FBXLoader.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/imaya/zlib.js@master/bin/inflate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.86.0/examples/js/loaders/FBXLoader.js"></script>
+
         <!-- FBXLoader for Three.js v86 -->
     </head>
 
@@ -259,19 +262,20 @@
                             if (child.isMesh) {
                                 child.castShadow = true;
                                 child.receiveShadow = true;
-                                // Optional: Apply a material if needed
+                                // Apply a texture instead of color
+                                const textureLoader = new THREE.TextureLoader();
                                 child.material = new THREE.MeshStandardMaterial({
-                                    color: 0x4682b4,
+                                    map: textureLoader.load('texture.jpeg'), // Replace with your texture image path
                                     shading: THREE.SmoothShading
                                 });
                             }
                         });
-                        heroSphere.scale.set(0.2, 0.2, 0.2); // Adjust scale to fit the game (match heroRadius)
+                        heroSphere.scale.set(0.005, 0.005, 0.005); // 2% of original size
                         heroSphere.position.y = heroBaseY;
                         heroSphere.position.z = 4.8;
                         currentLane = middleLane;
                         heroSphere.position.x = currentLane;
-                        heroSphere.rotation.y = Math.PI / 2; // Face forward
+                        heroSphere.rotation.y = Math.PI / 1;   // Keep this if it helps
                         scene.add(heroSphere);
 
                         // Check for animations
@@ -416,9 +420,10 @@
 
             function update() {
                 rollingGroundSphere.rotation.x += rollingSpeed;
+
                 if (heroSphere) {
-                    heroSphere.rotation.x -= heroRollingSpeed;
-                    if (heroSphere.position.y <= heroBaseY) {
+                    //heroSphere.rotation.x -= heroRollingSpeed;
+                    if (heroSphere.position.y <= heroBaseY - 0.3) {
                         jumping = false;
                         bounceValue = (Math.random() * 0.04) + 0.005;
                     }
