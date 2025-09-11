@@ -5,7 +5,6 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Stone Fall</title>
-
         <style>
             body {
                 margin: 0;
@@ -17,19 +16,45 @@
                 width: 100vw;
                 height: 100vh;
             }
-        </style>
 
+            #vignette {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                pointer-events: none;
+                background: radial-gradient(circle at center, transparent 60%, rgba(255, 0, 0, 0.6) 100%);
+                opacity: 0;
+                z-index: 10;
+            }
+
+            @keyframes vignetteFlash {
+                0% {
+                    opacity: 0;
+                }
+
+                20% {
+                    opacity: 1;
+                }
+
+                100% {
+                    opacity: 0;
+                }
+            }
+
+            .vignette-active {
+                animation: vignetteFlash 1.5s ease-out forwards;
+            }
+        </style>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/86/three.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/three@0.86.0/examples/js/loaders/FBXLoader.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/imaya/zlib.js@master/bin/inflate.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/three@0.86.0/examples/js/loaders/FBXLoader.js"></script>
-
-        <!-- FBXLoader for Three.js v86 -->
     </head>
 
     <body>
         <div id="TutContainer"></div>
-
+        <div id="vignette"></div>
         <script>
             var sceneWidth;
             var sceneHeight;
@@ -40,11 +65,12 @@
             var sun;
             var ground;
             var rollingGroundSphere;
-            var heroSphere; // Will hold the FBX fish model
+            var heroSphere;
+            var mixer;
             var rollingSpeed = 0.008;
             var heroRollingSpeed;
             var worldRadius = 26;
-            var heroRadius = 0.2; // Used for scaling reference
+            var heroRadius = 0.2;
             var sphericalHelper;
             var pathAngleValues;
             var heroBaseY = 1.8;
@@ -60,15 +86,7 @@
             var lastTreeReleaseTime = 0;
             var treesInPath;
             var treesPool;
-            var particleGeometry;
-            var particleCount = 20;
-            var explosionPower = 1.06;
-            var particles;
-            var scoreText;
-            var score;
             var hasCollided;
-
-            // Mobile touch controls
             var touchStartX = 0;
             var touchStartY = 0;
             var touchThreshold = 50;
@@ -82,7 +100,6 @@
 
             function createScene() {
                 hasCollided = false;
-                score = 0;
                 treesInPath = [];
                 treesPool = [];
                 clock = new THREE.Clock();
@@ -93,9 +110,9 @@
                 sceneWidth = window.innerWidth;
                 sceneHeight = window.innerHeight;
                 scene = new THREE.Scene();
-                scene.fog = new THREE.FogExp2(0x87CEEB, 0.14);
+                scene.fog = new THREE.FogExp2(0x87CEEB, 0.10);
                 scene.background = new THREE.Color(0x87CEEB);
-                camera = new THREE.PerspectiveCamera(80, sceneWidth / sceneHeight, 0.1, 1000);
+                camera = new THREE.PerspectiveCamera(90, sceneWidth / sceneHeight, 0.1, 1000); // Changed FOV to 90
                 renderer = new THREE.WebGLRenderer({ alpha: true });
                 renderer.setClearColor(0xfffafa, 1);
                 renderer.shadowMap.enabled = true;
@@ -105,42 +122,17 @@
                 dom.appendChild(renderer.domElement);
                 createTreesPool();
                 addWorld();
-                loadFishModel(); // Load FBX fish instead of addHero
+                loadFishModel();
                 addLight();
-                addExplosion();
                 addClouds();
 
-                camera.position.z = 6;
-                camera.position.y = 2;
+                camera.position.z = 8; // Moved back from 6
+                camera.position.y = 3.5;
 
                 window.addEventListener('resize', onWindowResize, false);
                 document.onkeydown = handleKeyDown;
                 dom.addEventListener('touchstart', handleTouchStart, false);
                 dom.addEventListener('touchend', handleTouchEnd, false);
-
-                scoreText = document.createElement('div');
-                scoreText.style.position = 'absolute';
-                scoreText.style.width = 100;
-                scoreText.style.height = 100;
-                scoreText.innerHTML = "0";
-                scoreText.style.top = 50 + 'px';
-                scoreText.style.left = 10 + 'px';
-                scoreText.style.fontSize = '24px';
-                scoreText.style.color = 'black';
-                scoreText.style.fontWeight = 'bold';
-                document.body.appendChild(scoreText);
-
-                var infoText = document.createElement('div');
-                infoText.style.position = 'absolute';
-                infoText.style.width = 200;
-                infoText.style.height = 100;
-                infoText.style.backgroundColor = "yellow";
-                infoText.innerHTML = "Swipe Left/Right - Move<br>Swipe Up - Jump";
-                infoText.style.top = 10 + 'px';
-                infoText.style.left = 10 + 'px';
-                infoText.style.fontSize = '14px';
-                infoText.style.textAlign = 'center';
-                document.body.appendChild(infoText);
             }
 
             function addClouds() {
@@ -211,22 +203,6 @@
                 }
             }
 
-            function addExplosion() {
-                particleGeometry = new THREE.Geometry();
-                for (var i = 0; i < particleCount; i++) {
-                    var vertex = new THREE.Vector3();
-                    particleGeometry.vertices.push(vertex);
-                }
-                var pMaterial = new THREE.ParticleBasicMaterial({
-                    color: 0xff0000,
-                    size: 0.3,
-                    blending: THREE.AdditiveBlending
-                });
-                particles = new THREE.Points(particleGeometry, pMaterial);
-                scene.add(particles);
-                particles.visible = false;
-            }
-
             function createTreesPool() {
                 var maxTreesInPool = 10;
                 for (var i = 0; i < maxTreesInPool; i++) {
@@ -254,37 +230,41 @@
             function loadFishModel() {
                 var loader = new THREE.FBXLoader();
                 loader.load(
-                    'FishAnimated.fbx', // Replace with the actual path to your FBX file
+                    'FishAnimated.fbx',
                     function (object) {
                         jumping = false;
                         heroSphere = object;
+                        console.log("Loaded FBX animations:", heroSphere.animations);
                         heroSphere.traverse(function (child) {
                             if (child.isMesh) {
                                 child.castShadow = true;
                                 child.receiveShadow = true;
-                                // Apply a texture instead of color
                                 const textureLoader = new THREE.TextureLoader();
                                 child.material = new THREE.MeshStandardMaterial({
-                                    map: textureLoader.load('texture.jpeg'), // Replace with your texture image path
+                                    map: textureLoader.load('texture.jpeg'),
+                                    metalness: 0.3,
+                                    roughness: 1,
                                     shading: THREE.SmoothShading
                                 });
                             }
                         });
-                        heroSphere.scale.set(0.005, 0.005, 0.005); // 2% of original size
+                        heroSphere.scale.set(0.005, 0.005, 0.005);
                         heroSphere.position.y = heroBaseY;
                         heroSphere.position.z = 4.8;
                         currentLane = middleLane;
                         heroSphere.position.x = currentLane;
-                        heroSphere.rotation.y = Math.PI / 1;   // Keep this if it helps
+                        heroSphere.rotation.y = Math.PI;
                         scene.add(heroSphere);
 
-                        // Check for animations
+                        mixer = new THREE.AnimationMixer(heroSphere);
                         if (heroSphere.animations && heroSphere.animations.length > 0) {
-                            // Basic animation setup (limited in v86)
-                            var animation = heroSphere.animations[0];
-                            var clipAction = null; // In v86, animation playback is manual
-                            // Note: v86 lacks AnimationMixer; you'd need to interpolate manually or upgrade
-                            console.log("Animation detected, but manual playback required in v86.");
+                            var clip = heroSphere.animations[0];
+                            var action = mixer.clipAction(clip);
+                            action.setLoop(THREE.LoopRepeat, Infinity);
+                            action.play();
+                            console.log("Animation started for fish model. Clip name:", clip.name || 'Unnamed');
+                        } else {
+                            console.log("No animations found in FBX. Check export settings.");
                         }
                     },
                     function (xhr) {
@@ -301,8 +281,10 @@
                 var tiers = 64;
                 var sphereGeometry = new THREE.SphereGeometry(worldRadius, sides, tiers);
                 var waterMaterial = new THREE.MeshStandardMaterial({
-                    color: 0x1e90ff,
-                    opacity: 0.7,
+                    color: 0x297aa6,
+                    opacity: 0.8,
+                    metalness: 0.8,
+                    roughness: 0.85,
                     transparent: true,
                     shading: THREE.SmoothShading
                 });
@@ -348,16 +330,24 @@
             }
 
             function addLight() {
-                var hemisphereLight = new THREE.HemisphereLight(0xfffafa, 0x000000, 0.9);
+                var hemisphereLight = new THREE.HemisphereLight(0xadd8e6, 0x228b22, 1.0);
                 scene.add(hemisphereLight);
-                sun = new THREE.DirectionalLight(0xcdc1c5, 0.9);
-                sun.position.set(12, 6, -7);
+                sun = new THREE.DirectionalLight(0xcdc1c5, 1.2);
+                sun.position.set(10, 8, -5);
                 sun.castShadow = true;
-                scene.add(sun);
-                sun.shadow.mapSize.width = 128;
-                sun.shadow.mapSize.height = 128;
+                sun.shadow.mapSize.width = 256;
+                sun.shadow.mapSize.height = 256;
                 sun.shadow.camera.near = 0.5;
                 sun.shadow.camera.far = 50;
+                scene.add(sun);
+                var fillLight = new THREE.DirectionalLight(0xcdc1c5, 0.5);
+                fillLight.position.set(-10, 6, -5);
+                fillLight.castShadow = true;
+                fillLight.shadow.mapSize.width = 256;
+                fillLight.shadow.mapSize.height = 256;
+                fillLight.shadow.camera.near = 0.5;
+                fillLight.shadow.camera.far = 50;
+                scene.add(fillLight);
             }
 
             function addPathTree() {
@@ -409,7 +399,12 @@
             function createRock() {
                 var sides = 8;
                 var rockGeometry = new THREE.DodecahedronGeometry(0.5, 0);
-                var rockMaterial = new THREE.MeshStandardMaterial({ color: 0x808080, shading: THREE.SmoothShading });
+                var rockMaterial = new THREE.MeshStandardMaterial({
+                    color: 0x808080,
+                    roughness: 0.9,
+                    metalness: 0,
+                    shading: THREE.SmoothShading
+                });
                 var rock = new THREE.Mesh(rockGeometry, rockMaterial);
                 rock.castShadow = true;
                 rock.receiveShadow = false;
@@ -419,35 +414,31 @@
             }
 
             function update() {
+                var delta = clock.getDelta();
                 rollingGroundSphere.rotation.x += rollingSpeed;
 
                 if (heroSphere) {
-                    //heroSphere.rotation.x -= heroRollingSpeed;
                     if (heroSphere.position.y <= heroBaseY - 0.3) {
                         jumping = false;
                         bounceValue = (Math.random() * 0.04) + 0.005;
                     }
                     heroSphere.position.y += bounceValue;
-                    heroSphere.position.x = THREE.Math.lerp(heroSphere.position.x, currentLane, 2 * clock.getDelta());
+                    heroSphere.position.x = THREE.Math.lerp(heroSphere.position.x, currentLane, 2 * delta);
                     bounceValue -= gravity;
 
-                    // Basic animation update (if any)
-                    if (heroSphere.animations && heroSphere.animations.length > 0) {
-                        // Manual animation step (v86 limitation)
-                        // You may need to implement frame-by-frame interpolation
-                        console.log("Animation update placeholder");
+                    var time = clock.getElapsedTime();
+                    var targetRotationY = Math.PI + Math.sin(time * 4) * 0.15;
+                    heroSphere.rotation.y = THREE.Math.lerp(heroSphere.rotation.y, targetRotationY, 0.1);
+
+                    if (mixer) {
+                        mixer.update(delta);
                     }
                 }
                 if (clock.getElapsedTime() > treeReleaseInterval) {
                     clock.start();
                     addPathTree();
-                    if (!hasCollided) {
-                        score += 2 * treeReleaseInterval;
-                        scoreText.innerHTML = score.toString();
-                    }
                 }
                 doTreeLogic();
-                doExplosionLogic();
                 render();
                 requestAnimationFrame(update);
             }
@@ -465,7 +456,10 @@
                         if (heroSphere && treePos.distanceTo(heroSphere.position) <= 0.6) {
                             console.log("hit");
                             hasCollided = true;
-                            explode();
+                            var vignette = document.getElementById('vignette');
+                            vignette.classList.remove('vignette-active');
+                            void vignette.offsetWidth;
+                            vignette.classList.add('vignette-active');
                         }
                     }
                 });
@@ -478,36 +472,6 @@
                     oneTree.visible = false;
                     console.log("remove rock");
                 });
-            }
-
-            function doExplosionLogic() {
-                if (!particles.visible) return;
-                for (var i = 0; i < particleCount; i++) {
-                    particleGeometry.vertices[i].multiplyScalar(explosionPower);
-                }
-                if (explosionPower > 1.005) {
-                    explosionPower -= 0.001;
-                } else {
-                    particles.visible = false;
-                }
-                particleGeometry.verticesNeedUpdate = true;
-            }
-
-            function explode() {
-                if (heroSphere) {
-                    particles.position.y = 2;
-                    particles.position.z = 4.8;
-                    particles.position.x = heroSphere.position.x;
-                    for (var i = 0; i < particleCount; i++) {
-                        var vertex = new THREE.Vector3();
-                        vertex.x = -0.2 + Math.random() * 0.4;
-                        vertex.y = -0.2 + Math.random() * 0.4;
-                        vertex.z = -0.2 + Math.random() * 0.4;
-                        particleGeometry.vertices[i] = vertex;
-                    }
-                    explosionPower = 1.07;
-                    particles.visible = true;
-                }
             }
 
             function render() {
