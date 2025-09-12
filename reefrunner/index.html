@@ -11,7 +11,6 @@
                 padding: 0;
                 overflow: hidden;
                 touch-action: none;
-                /* Prevents default touch actions like scrolling */
             }
 
             #TutContainer {
@@ -69,15 +68,15 @@
             var rollingGroundSphere;
             var heroSphere;
             var mixer;
-            var rollingSpeed = 0.004; // Reduced from 0.008 to slow down the game
+            var rollingSpeed = 0.004;
             var heroRollingSpeed;
             var worldRadius = 26;
             var heroRadius = 0.2;
             var sphericalHelper;
             var pathAngleValues;
-            var heroBaseY = 1.8;
-            var bounceValue = 0.1;
-            var gravity = 0.005;
+            var heroBaseY = 1.6;
+            var bounceValue = 0.05; // Reduced from 0.07 for subtler jumps
+            var gravity = 0.0015;
             var leftLane = -1;
             var rightLane = 1;
             var middleLane = 0;
@@ -153,14 +152,14 @@
             }
 
             function handleTouchStart(event) {
-                event.preventDefault(); // Prevent default scrolling
+                event.preventDefault();
                 var touch = event.touches[0];
                 touchStartX = touch.clientX;
                 touchStartY = touch.clientY;
             }
 
             function handleTouchEnd(event) {
-                event.preventDefault(); // Prevent default scrolling
+                event.preventDefault();
                 if (jumping) return;
                 var touch = event.changedTouches[0];
                 var touchEndX = touch.clientX;
@@ -177,7 +176,7 @@
                         handleLaneChange(-1);
                     }
                 } else if (absDeltaY > absDeltaX && absDeltaY > touchThreshold && deltaY < 0) {
-                    bounceValue = 0.1;
+                    bounceValue = 0.05; // Reduced for swipe-up jump
                     jumping = true;
                 }
             }
@@ -203,7 +202,7 @@
                 }
                 if (validMove) {
                     jumping = true;
-                    bounceValue = 0.06;
+                    bounceValue = 0.03; // Reduced for lane change jump
                 }
             }
 
@@ -224,7 +223,7 @@
                     handleLaneChange(1);
                 } else {
                     if (keyEvent.keyCode === 38) {
-                        bounceValue = 0.1;
+                        bounceValue = 0.05; // Reduced for keyboard jump
                         jumping = true;
                     }
                     validMove = false;
@@ -299,7 +298,7 @@
                 var firstVertexVector = new THREE.Vector3();
                 var offset = new THREE.Vector3();
                 var currentTier = 1;
-                var lerpValue = 0.5;
+                var lerpValue = 0.9;
                 var heightValue;
                 var maxHeight = 0.07;
                 for (var j = 1; j < tiers - 2; j++) {
@@ -422,17 +421,23 @@
                 rollingGroundSphere.rotation.x += rollingSpeed;
 
                 if (heroSphere) {
-                    if (heroSphere.position.y <= heroBaseY - 0.3) {
-                        jumping = false;
-                        bounceValue = (Math.random() * 0.04) + 0.005;
+                    if (jumping) {
+                        if (heroSphere.position.y <= heroBaseY - 0.1) {
+                            jumping = false;
+                            heroSphere.position.y = heroBaseY; // Reset to base height when landing
+                            bounceValue = 0; // Clear bounce value when not jumping
+                        } else {
+                            heroSphere.position.y += bounceValue;
+                            bounceValue -= gravity;
+                        }
+                    } else {
+                        heroSphere.position.y = heroBaseY; // Keep fish at base height when not jumping
                     }
-                    heroSphere.position.y += bounceValue;
                     heroSphere.position.x = THREE.Math.lerp(heroSphere.position.x, currentLane, 2 * delta);
-                    bounceValue -= gravity;
 
                     var time = clock.getElapsedTime();
-                    var targetRotationY = Math.PI + Math.sin(time * 4) * 0.15;
-                    heroSphere.rotation.y = THREE.Math.lerp(heroSphere.rotation.y, targetRotationY, 0.1);
+                    var targetRotationY = Math.PI + Math.sin(time * 1) * 0.1;
+                    heroSphere.rotation.y = THREE.Math.lerp(heroSphere.rotation.y, targetRotationY, 0.5);
 
                     if (mixer) {
                         mixer.update(delta);
