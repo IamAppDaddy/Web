@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reef Runner - Game Documentation</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                color: #333;
+                line-height: 1.4;
+                font-size: 0.85rem;
+                overflow-x: hidden;
+            }
+
+            header {
+                background-color: #297aa6;
+                color: white;
+                padding: 0.8rem 0;
+                text-align: left;
+            }
+
+            header h1 {
+                margin: 0 0.4rem;
+                padding: 10px;
+                font-size: 30px;
+            }
+
+            main {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 10px;
+            }
+
+            section {
+                background: white;
+                padding: 0.8rem 0;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            h2 {
+                color: #297aa6;
+                font-size: 1.3rem;
+                margin: 0.4rem;
+                text-align: left;
+            }
+
+            p,
+            ul {
+                margin: 0.4rem;
+            }
+
+            h3{
+                padding: 10px;
+            }
+
+            ul {
+                padding-left: 1rem;
+            }
+
+            footer {
+                background-color: #297aa6;
+                color: white;
+                padding: 30px;
+                width: 100%;
+                text-align: center;
+            }
+            p{
+                font-size: 16px;
+            }
+
+            footer p {
+                margin: 0 0.4rem;
+                font-size: 0.85rem;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <h1>Reef Runner Documentation</h1>
+        </header>
+        <main>
+            <section>
+                <h2>About Reef Runner</h2>
+                <p><strong>One-Line Description:</strong> Guide a fish through a vibrant coral sea, dodging rocks in
+                    this fast-paced endless runner with intuitive controls and a thrilling vignette effect.</p>
+                <p><strong>Full Description:</strong> Dive into <em>Reef Runner</em>, an exhilarating underwater
+                    adventure that tests your reflexes and agility! Take control of a lively fish navigating a
+                    spherical, ever-rolling coral sea filled with treacherous rocks. Your goal? Swim through three
+                    lanes, jumping and weaving to avoid obstacles in an endless race for survival. With a vibrant
+                    oceanic backdrop, smooth zig-zag animations, and a striking red vignette effect that pulses on every
+                    collision, the game immerses you in a dynamic underwater world. Optimized for both mobile and
+                    desktop, <em>Reef Runner</em> features intuitive swipe and keyboard controls, making it easy to pick
+                    up but hard to master. The game’s stunning visuals, powered by Three.js, include a shimmering sea,
+                    scattered clouds, and soft shadows, creating a captivating experience. Whether you’re dodging rocks
+                    or chasing high scores, <em>Reef Runner</em> offers endless fun for casual gamers and thrill-seekers
+                    alike. Swim fast, stay sharp, and conquer the reef!</p>
+            </section>
+            <section>
+                <h2>How to Play</h2>
+                <p>In <em>Reef Runner</em>, you control a fish swimming through a coral sea, avoiding rocks that appear
+                    in three lanes. Use quick reflexes to switch lanes or jump over obstacles.</p>
+                <h3>Controls</h3>
+                <ul>
+                    <li><strong>Mobile:</strong>
+                        <ul>
+                            <li><strong>Swipe Left/Right:</strong> Switch lanes.</li>
+                            <li><strong>Swipe Up:</strong> Jump to avoid rocks.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Desktop:</strong>
+                        <ul>
+                            <li><strong>Left Arrow:</strong> Move to the left lane.</li>
+                            <li><strong>Right Arrow:</strong> Move to the right lane.</li>
+                            <li><strong>Up Arrow:</strong> Jump to avoid rocks.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <h3>Gameplay Tips</h3>
+                <ul>
+                    <li>Watch for rocks spawning in one or two of the three lanes.</li>
+                    <li>Time your jumps carefully to clear obstacles without colliding.</li>
+                    <li>A red vignette effect flashes on collisions, signaling a hit.</li>
+                    <li>Stay alert as the sea scrolls faster over time!</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Technical Details</h2>
+                <ul>
+                    <li><strong>Platform:</strong> Web-based (mobile and desktop browsers).</li>
+                    <li><strong>Technology:</strong> Built with Three.js (r86) for 3D rendering, featuring a spherical
+                        sea, animated fish model, and dynamic lighting.</li>
+                    <li><strong>Assets:</strong> Includes a 3D fish model (FBX) with zig-zag swim animation and a custom
+                        texture.</li>
+                    <li><strong>Features:</strong> Endless runner mechanics, lane-based movement, jump mechanics,
+                        collision detection with vignette effect, and responsive design.</li>
+                </ul>
+            </section>
+            <section>
+                <h2>System Requirements</h2>
+                <ul>
+                    <li><strong>Browser:</strong> Chrome, Firefox, or any WebGL-supported browser.</li>
+                    <li><strong>Device:</strong> Mobile with touch support or desktop.</li>
+                    <li><strong>Internet:</strong> Required for initial asset loading (CDN scripts).</li>
+                </ul>
+            </section>
+        </main>
+        <footer>
+            <p>Download on AppDadz</p>
+        </footer>
+    </body>
+
+</html>
