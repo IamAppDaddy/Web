@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Cube - Documentation</title>
+        <style>
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                font-weight: 400;
+                font-style: normal;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            body {
+                background: white;
+                color: #070d15;
+                line-height: 1.6;
+                font-size: 16px;
+                font-family: sans-serif;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                overflow-x: hidden;
+            }
+
+            header {
+                text-align: center;
+                margin-bottom: 1.5rem;
+                padding: 1rem;
+                background: #9effed;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            }
+
+            header h1 {
+                font-size: 2rem;
+                color: #000000;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+            }
+
+            header p {
+                font-size: 1rem;
+                color: rgba(7, 13, 21, 0.8);
+            }
+
+            main {
+                max-width: 100%;
+                margin: 0 auto;
+                flex: 1;
+                padding-bottom: 2rem;
+            }
+
+            section {
+                margin-bottom: 1.5rem;
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.15);
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+                color: #000000;
+                font-weight: 700;
+                margin-bottom: 0.75rem;
+                padding-bottom: 0.25rem;
+            }
+
+            section p,
+            section ul {
+                font-size: 0.9rem;
+                color: #070d15;
+                margin-bottom: 0.75rem;
+            }
+
+            section ul {
+                list-style: none;
+                padding-left: 1rem;
+            }
+
+            section ul li {
+                position: relative;
+                padding-left: 1.5rem;
+                margin-bottom: 0.5rem;
+                line-height: 1.4;
+            }
+
+            section ul li::before {
+                content: "▸";
+                position: absolute;
+                left: 0;
+                color: #41aac8;
+                font-size: 1rem;
+            }
+
+            footer {
+                text-align: center;
+                padding: 1rem;
+                font-size: 0.9rem;
+                color: rgba(7, 13, 21, 0.7);
+                background: #9effed;
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
+                margin-top: 1rem;
+            }
+
+            @media (max-width: 600px) {
+                body {
+                    font-size: 14px;
+                }
+
+                header h1 {
+                    font-size: 1.8rem;
+                }
+
+                header p {
+                    font-size: 0.9rem;
+                }
+
+                section h2 {
+                    font-size: 1.3rem;
+                }
+
+                section p,
+                section ul {
+                    font-size: 0.85rem;
+                }
+
+                section {
+                    padding: 0.75rem;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <h1>The Cube</h1>
+            <p>Documentation for the Ultimate Cube-Solving Experience</p>
+        </header>
+        <main>
+            <section>
+                <h2>Overview</h2>
+                <p>"The Cube" is a sleek, interactive 3D Rubik's Cube game designed for mobile. Solve the cube as fast
+                    as possible with intuitive touch controls and customizable settings tailored for speedcubing
+                    enthusiasts and casual players alike.</p>
+            </section>
+            <section>
+                <h2>How to Play</h2>
+                <ul>
+                    <li><strong>Start the Game</strong>: Double-tap the screen to begin. The timer starts when you make
+                        your first move.</li>
+                    <li><strong>Rotate the Cube</strong>: Swipe left, right, up, or down to rotate cube faces. Use touch
+                        gestures to manipulate the cube in 3D.</li>
+                    <li><strong>Timer</strong>: A real-time timer tracks your solve time, displayed prominently on the
+                        screen.</li>
+                    <li><strong>Complete the Cube</strong>: Align all faces to a single color to solve the cube. See
+                        "Complete!" and possibly "Best Time!" if you set a new record.</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Customization Options</h2>
+                <p>Tap the settings button to access options for personalizing your gameplay:</p>
+                <ul>
+                    <li><strong>Cube Size</strong>: Select 2x2x2, 3x3x3, 4x4x4, or 5x5x5 cubes.</li>
+                    <li><strong>Flip Type</strong>: Choose rotation animations: Swift, Smooth, or Bounce.</li>
+                    <li><strong>Scramble Length</strong>: Set the number of random moves (20, 25, or 30).</li>
+                    <li><strong>Camera Angle</strong>: Toggle between Orthographic and Perspective views.</li>
+                    <li><strong>Color Scheme</strong>: Pick themes like Cube, Erno, Dust, Camo, or Rain.</li>
+                    <li><strong>Custom Colors</strong>: Adjust Hue, Saturation, and Lightness sliders to create custom
+                        cube colors.</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Statistics</h2>
+                <p>View your progress by tapping the stats button:</p>
+                <ul>
+                    <li><strong>Cube Size</strong>: Shows the current cube size (e.g., 3x3x3).</li>
+                    <li><strong>Total Solves</strong>: Tracks your total completed solves.</li>
+                    <li><strong>Best Time</strong>: Displays your fastest solve time.</li>
+                    <li><strong>Average of 5/12/25</strong>: Shows average solve times over the last 5, 12, or 25
+                        solves.</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Platform Compatibility</h2>
+                <p>"The Cube" is optimized for mobile devices:</p>
+                <ul>
+                    <li><strong>Android</strong>: Render the game in an Android app using a WebView for a smooth
+                        experience.</li>
+                    <li><strong>iOS</strong>: Use a WebView to run the game in an iOS app, optimized for iPhones and
+                        iPads.</li>
+                    <li><strong>Web</strong>: Load the game file in a mobile browser for instant play without
+                        installation.</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Technical Notes</h2>
+                <ul>
+                    <li>Powered by Three.js for high-quality 3D rendering.</li>
+                    <li>Custom touch-friendly sliders and icons enhance the mobile experience.</li>
+                    <li>Uses the "Bowlby One" font for a bold, modern look.</li>
+                </ul>
+            </section>
+        </main>
+        <footer>
+            Download on AppDadz
+        </footer>
+    </body>
+
+</html>
