@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>Snake Game Documentation</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            @font-face {
+                font-family: 'Snake';
+                src: url('snake.woff2') format('woff2');
+                font-weight: normal;
+                font-style: normal;
+            }
+
+            body {
+                font-family: 'Snake', Arial, sans-serif;
+                background: #ffffff;
+                color: #333333;
+                line-height: 1.6;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            header {
+                text-align: start;
+                padding: 25px 0px 25px 10px;
+                background: #000000;
+
+                margin-bottom: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+                line-height: 1.2;
+                color: #ffffff;
+            }
+
+            main {
+                flex: 1;
+                max-width: 100%;
+            }
+
+            section {
+                margin-bottom: 16px;
+                padding: 8px;
+                background: #ffffff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            section h2 {
+                font-size: 1.4rem;
+                color: #000000;
+                margin-bottom: 8px;
+            }
+
+            section p,
+            section ul {
+                font-size: 1rem;
+                color: #333333;
+            }
+
+            section ul {
+                list-style-type: disc;
+                padding-left: 20px;
+            }
+
+            footer {
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background: #000000;
+                color: #ffffff;
+                text-align: center;
+                padding: 20px;
+                font-size: 0.9rem;
+                box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            @media (max-width: 600px) {
+                header h1 {
+                    font-size: 1.5rem;
+                }
+
+                section h2 {
+                    font-size: 1.2rem;
+                }
+
+                section p,
+                section ul {
+                    font-size: 0.9rem;
+                }
+
+                footer {
+                    font-size: 0.8rem;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <h1>Snake Game <br>Documentation</h1>
+        </header>
+        <main>
+            <section>
+                <h2>Overview</h2>
+                <p>Control a black snake to eat green food and grow longer on a white canvas using arrow keys or swipes
+                    in this smooth, classic Snake game built in one HTML file.</p>
+            </section>
+            <section>
+                <h2>Gameplay</h2>
+                <p>Snake is a classic arcade game where players control a black snake on a white canvas to eat green
+                    food, growing longer with each bite. Navigate using arrow keys or swipe gestures, avoiding
+                    collisions with the snake's own body. The game offers smooth gameplay with a 15px grid and 20 FPS,
+                    featuring clear start and game over screens with black and white text for readability.</p>
+            </section>
+            <section>
+                <h2>Controls</h2>
+                <ul>
+                    <li><strong>Arrow Keys</strong>: Use Up, Down, Left, Right keys to change the snake's direction.
+                    </li>
+                    <li><strong>Swipe Gestures</strong>: Swipe up, down, left, or right on the screen to move the snake.
+                    </li>
+                    <li><strong>Start/Restart</strong>: Press any arrow key or swipe on the start or game over screen to
+                        begin or restart the game.</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Features</h2>
+                <ul>
+                    <li>Smooth gameplay with a 15px grid and 20 FPS for fluid movement.</li>
+                    <li>Black snake and green food on a white background for clear visuals.</li>
+                    <li>Responsive design optimized for mobile devices with touch controls.</li>
+                    <li>Clear start screen with black text and game over screen with white text on a dark overlay.</li>
+                    <li>Built in a single HTML file for simplicity and portability.</li>
+                </ul>
+            </section>
+        </main>
+        <footer>
+            Download on AppDadz
+        </footer>
+    </body>
+
+</html>
